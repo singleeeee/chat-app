@@ -1,4 +1,6 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig } from 'axios'
+
+const BASE_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5001/api' : '/api'
 interface IResponse<T> {
   code: number
   data: T
@@ -7,7 +9,7 @@ interface IResponse<T> {
 }
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: BASE_URL,
   timeout: 10000, // 10s
   withCredentials: true,
 })

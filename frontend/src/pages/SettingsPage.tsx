@@ -97,7 +97,7 @@ const SettingsPage = () => {
                       type="text"
                       className="input input-bordered flex-1 text-sm h-10"
                       placeholder="Type a message..."
-                      value="This is a preview"
+                      value="预览"
                       readOnly
                     />
                     <button className="btn btn-primary h-10 min-h-0">

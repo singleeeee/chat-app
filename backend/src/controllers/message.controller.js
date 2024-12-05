@@ -1,6 +1,7 @@
 import User from '../models/user.model.js'
 import Message from '../models/message.model.js'
 import { successResponse, errorResponse } from '../lib/responseHandler.js'
+import { getUserSocketId, io } from '../lib/socket.js'
 
 
 export const getUsersForSidebar = async (req, res) => {
@@ -52,9 +53,12 @@ export const sendMessage = async (req, res) => {
     const newMessage = new Message({senderId, receiverId, text, image: imgUrl})
     await newMessage.save()
 
-    //todo: socket.io
+    const receiverSocketId = getUserSocketId(receiverId)
+    if(receiverSocketId){
+      io.to(receiverSocketId).emit('newMessage', newMessage)
+    }
 
-    res.status(201).json(newMessage)
+    res.status(201).json(successResponse(newMessage))
   } catch (error) {
     console.error('发送消息错误', error)
     res.status(500).json(errorResponse(500, '服务器内部错误'))
