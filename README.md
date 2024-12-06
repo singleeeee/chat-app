@@ -1,15 +1,15 @@
 # chat-app
 A real-time communication chat room that supports GPT questioning
-# Start
-## backend
+# Development
 ```shell
 cd ./backend
-pnpm install
+pnpm dev
+
+cd ../frontend
 pnpm dev
 ```
-## frontend
+# Production
 ```shell
-cd ./frontend
-pnpm install
-pnpm dev
+pnpm build
+pnpm start
 ```
