@@ -4,7 +4,7 @@ import { signupApi, loginApi, checkAuthStatusApi, logoutApi, updateProfileApi } 
 import toast from 'react-hot-toast'
 import { Socket, io } from 'socket.io-client'
 
-const BASE_URL = "http://localhost:5001"
+const BASE_URL = import.meta.env.VITE_SOCKET_URL
 
 interface AuthStore {
   authUser: User | null
@@ -97,9 +97,11 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     const socket = io(BASE_URL, {
       query: {
         userId: authUser._id
-      }
+      },
+      withCredentials: true,
     });
     socket.connect()
+    console.log(BASE_URL, 'socket')
     console.log('连接成功')
     set({ socket })
 

@@ -1,6 +1,9 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
+import dotenv from 'dotenv'
+
+dotenv.config({ path: `.env.${process.env.NODE_MODE}` })
 
 const app = express();
 const server = http.createServer(app);
@@ -9,7 +12,8 @@ const server = http.createServer(app);
 const userSocketMap = new Map();
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
   },
 });
 
@@ -19,7 +23,7 @@ export function getUserSocketId(userId){
 
 
 io.on("connection", (socket) =>{
-  console.log(" 有用户连接了 ", socket.id);
+  console.log(`用户${socket.id}连接了 `);
 
   const userId = socket.handshake.query.userId;
   if(userId){
@@ -30,7 +34,7 @@ io.on("connection", (socket) =>{
   io.emit("getOnlineUsers", Array.from(userSocketMap.keys()))
 
   socket.on("disconnect", () => {
-    console.log(" 有用户断开了连接 ", socket.id);
+    console.log(`用户${socket.id}断开了连接`);
 
     userSocketMap.delete(userId)
     io.emit("getOnlineUsers", Array.from(userSocketMap.keys()))
