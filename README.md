@@ -1,5 +1,16 @@
 # chat-app
 A real-time communication chat room that supports GPT questioning
+
+# technology stack
+- React
+- Zustand
+- Unocss
+- Daisyui
+- Express
+- Socket.io
+- MongoDB
+- Cloudinary
+- 
 # Development
 ```shell
 cd ./backend
